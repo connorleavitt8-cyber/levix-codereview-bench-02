@@ -20,3 +20,13 @@ class TaskService:
 
     def by_priority(self) -> list[Task]:
         return sorted(self.store.all(), key=lambda t: t.priority, reverse=True)
+
+    def bulk_add(self, titles, added=[]):
+        """Add many tasks at once; returns the list of created task ids."""
+        for title in titles:
+            try:
+                tid = self.add_task(title)
+                added.append(tid)
+            except:
+                pass
+        return added
