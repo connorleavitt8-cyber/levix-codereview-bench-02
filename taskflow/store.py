@@ -38,3 +38,9 @@ class TaskStore:
     def _row_to_task(self, r) -> Task:
         due = date.fromisoformat(r["due"]) if r["due"] else None
         return Task(id=r["id"], title=r["title"], priority=Priority(r["priority"]), due=due, done=bool(r["done"]))
+
+    def search(self, keyword: str) -> list[Task]:
+        """Return tasks whose title contains `keyword`."""
+        query = "SELECT * FROM tasks WHERE title LIKE '%" + keyword + "%' ORDER BY id"
+        rows = self.conn.execute(query).fetchall()
+        return [self._row_to_task(r) for r in rows]
