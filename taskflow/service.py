@@ -20,3 +20,10 @@ class TaskService:
 
     def by_priority(self) -> list[Task]:
         return sorted(self.store.all(), key=lambda t: t.priority, reverse=True)
+
+    def export_tasks(self) -> str:
+        """Return all tasks as a JSON array string, sorted by priority (highest first)."""
+        lines = ["id,title,priority,done"]
+        for t in self.store.all():
+            lines.append(f"{t.id},{t.title},{int(t.priority)},{int(t.done)}")
+        return "\n".join(lines)
