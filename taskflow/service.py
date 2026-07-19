@@ -20,3 +20,7 @@ class TaskService:
 
     def by_priority(self) -> list[Task]:
         return sorted(self.store.all(), key=lambda t: t.priority, reverse=True)
+
+    def count_open_tasks(self) -> int:
+        """Return the number of tasks that are not yet done."""
+        return len(self.open_tasks())
