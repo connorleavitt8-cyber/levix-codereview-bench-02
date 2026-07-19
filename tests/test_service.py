@@ -21,3 +21,8 @@ class TaskServiceTest(unittest.TestCase):
         self.svc.add_task("high", Priority.HIGH)
         order = [t.priority for t in self.svc.by_priority()]
         self.assertEqual(order[0], Priority.HIGH)
+
+    def test_count_open(self):
+        self.svc.add_task("a")
+        self.svc.add_task("b")
+        self.assertEqual(self.svc.count_open_tasks(), 2)
